@@ -87,6 +87,10 @@ endif
 if !exists("g:pep8_ignore")
   let g:pep8_ignore=""
 endif
+" set --max-line-length, default 79
+if !exists("g:pep8_max_line_length")
+  let g:pep8_max_line_length="79"
+endif
 let s:match_group = 'Pep8'
 " }}}
 
@@ -120,11 +124,16 @@ args = vim.eval('string(g:pep8_args)')
 select = vim.eval('string(g:pep8_select)')
 ignore = vim.eval('string(g:pep8_ignore)')
 
+max_line_length = vim.eval('string(g:pep8_max_line_length)')
+
 if select:
     args = args + ' --select=%s' % select
 
 if ignore:
     args = args + ' --ignore=%s' % ignore
+
+if max_line_length:
+    args = args + ' --max-line-length=%s' % max_line_length
 
 pep8_checker = Pep8Checker(cmd, args)
 
