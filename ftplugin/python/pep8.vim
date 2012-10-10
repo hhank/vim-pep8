@@ -203,16 +203,31 @@ endfun
 " }}}
 
 function! s:Update() " {{{
-    call s:Run()
-    call s:GetMessage()
+    if exists("g:vim_pep8_on")
+        call s:Run()
+        call s:GetMessage()
+    endif
 endfunction
 " }}}
+
+function! s:TogglePep8() " {{{
+    if !exists("g:vim_pep8_on")
+        let g:vim_pep8_on="1"
+        call s:Update()
+    else
+        unlet g:vim_pep8_on
+        call s:Clear()
+    endif
+endfunc
+" }}}
+
 " }}}
 
 " Commands. {{{
 command! Pep8Update :call s:Update()
 command! Pep8Clear :call s:Clear()
 command! Pep8GetMessage :call s:GetMessage()
+command! Pep8Toggle :call s:TogglePep8()
 " }}}
 
 " Restore 'cpoptions' {{{
@@ -222,3 +237,4 @@ unlet s:save_cpo
 " }}}
 " __END__
 " vim:foldmethod=marker
+
